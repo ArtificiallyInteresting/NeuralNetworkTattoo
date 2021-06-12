@@ -6,7 +6,7 @@ def lettersToNumbers(df):
     x_train = pd.DataFrame()
     y_train = pd.DataFrame()
     for index, row in df.iterrows():
-        print(row)
+        # print(row)
         x_train = x_train.append(pd.Series(oneWordToNumbers(row["Input"]), name="x_train"))
         y_train = y_train.append(pd.Series(oneWordToNumbers(row["Output"]), name="y_train"))
         # newDf = newDf.append(pd.DataFrame([row["Input"], row["Output"]], columns=newDf.columns))
@@ -36,3 +36,12 @@ def oneWordToNumbers(word):
         numbers = numbers[:8]
     return numbers
 
+def finalStats(predictions, y_train):
+    hits = 0
+    for prediction, actual in zip(predictions, y_train.values):
+        predictionWord = numbersToOneWord(prediction)
+        actualWord = numbersToOneWord(actual)
+        print("Actual: {}, Predicted:{}".format(actualWord, predictionWord))
+        if predictionWord == actualWord:
+            hits += 1
+    print("Correct: {}, Total: {}".format(hits, len(predictions)))
